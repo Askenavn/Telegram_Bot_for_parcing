@@ -4,17 +4,17 @@ import csv
 import telebot
 import time
 
-token = "5087065097:AAHPxP5l6FD99eObncKMpWNcPlp4RXjGMLE" # Я изучил много информации, но так и не нашел как сделать бота без токена
-channel_id = "@fsdgfsdg" # логин канала куда постятся новости
+token = "" # token of your bot
+channel_id = "" # login of channel for posting
 bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(content_types=['text']) #Bot
 
 def commands(message):
-    #bot.send_message(channel_id, message.text)
+    
     if message.text == "Старт":
-        #bot.send_message(channel_id, "Hello")
+        
         back_clock = None
         while True:
             post_text = parser(back_clock)
@@ -28,18 +28,18 @@ def commands(message):
 
 #Parcing
 def parser(back_clock):
-    URL = 'https://vc.ru/new/' #URL сайта для парсинга
+    URL = 'https://vc.ru/new/' #URL of site for parcing
 
     r = requests.get(URL)
     soup = BeautifulSoup(r.content, "html.parser")
-    item = soup.find('div', class_='feed__item') #находим последнюю опубликованную новость
+    item = soup.find('div', class_='feed__item') 
     clock = item.find('time', class_='time', title=True)
     clock = clock["title"]
 
 
     if clock != back_clock:
-        link = item.find('a', class_='content-link', href=True)["href"].strip()  # находим ссылку на нее
-        title = item.find('div', class_='content-title content-title--short l-island-a').text.strip()  # находим название
+        link = item.find('a', class_='content-link', href=True)["href"].strip()
+        title = item.find('div', class_='content-title content-title--short l-island-a').text.strip()
         description = item.find('p').text.strip()
 
         return f"{title}\n\n{description}\n\n{link}", clock
