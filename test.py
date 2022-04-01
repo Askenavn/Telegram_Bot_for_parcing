@@ -10,10 +10,11 @@ time = item.find('time', class_='time', title=True)["title"].strip()
 description = item.find('p').text.strip()
 link = item.find('a', class_='content-link', href=True)["href"].strip()
 title = item.find('div', class_='content-title content-title--short l-island-a').text.strip()  # находим название
-spam_f = item.find('div', class_='content-title content-title--short l-island-a')
-spam_s = spam_f.find('span', class_='content-editional-trick')
+item_id = item.find('div', class_='l-mb-28')
+item_idid = item_id["class"]
+
 print(title)
-print(spam_s)
+print(item_idid)
 print(description)
 print(time)
 print(link)
